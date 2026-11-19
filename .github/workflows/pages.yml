@@ -29,8 +29,7 @@ jobs:
           python-version: '3.12'
       - name: Capture forecasts and reconcile station readings
         env:
-          OPENWEATHER_ENABLED: ${{ vars.OPENWEATHER_ENABLED }}
-          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          COOLCODE_OPENWEATHER_API_KEY: ${{ secrets.COOLCODE_OPENWEATHER_API_KEY }}
         run: python3 scripts/collect.py
       - name: Validate and preserve archive
         id: preserve

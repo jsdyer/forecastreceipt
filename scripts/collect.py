@@ -116,9 +116,12 @@ def forecast(provider, station, now, key):
 
 
 def observation_range(station, start, end):
+    # GeoMet's temporal query indexes local station dates. Pad each UTC chunk
+    # and select the precise UTC interval from returned UTC_DATE observations.
+    buffer = timedelta(days=1)
     raw = get("https://api.weather.gc.ca/collections/climate-hourly/items", {
         "f": "json", "CLIMATE_IDENTIFIER": station["climate_id"], "limit": 1000,
-        "datetime": f"{stamp(start)}/{stamp(end)}",
+        "datetime": f"{stamp(start-buffer)}/{stamp(end+buffer)}",
     })
     if raw.get("numberMatched", 0) > len(raw["features"]):
         raise SourceError("truncated station query")
@@ -175,7 +178,7 @@ def main():
     now = datetime.now(UTC)
     slot = now.replace(hour=(now.hour // 6) * 6, minute=0, second=0, microsecond=0)
     statuses, fresh = {}, 0
-    key = os.environ.get("OPENWEATHER_API_KEY") if os.environ.get("OPENWEATHER_ENABLED") == "true" else None
+    key = os.environ.get("COOLCODE_OPENWEATHER_API_KEY")
     for slug, station in STATIONS.items():
         statuses[slug] = {}
         for provider in (GFS, OWM):
@@ -188,7 +191,7 @@ def main():
                     save(path, forecast(provider, station, now, key), exclusive=True)
                 statuses[slug][provider] = "Captured for this six-hour window."
                 fresh += 1
-            except (SourceError, KeyError, IndexError, ValueError):
+            except (SourceError, KeyError, IndexError, TypeError, ValueError, OverflowError):
                 statuses[slug][provider] = "Latest fetch unavailable. Previous receipts are retained."
         saved = sorted((DATA / "receipts").glob(f"*/*-{slug}-*.json"))
         first = parse(load(saved[0])["capture_utc"]) if saved else now

@@ -1,9 +1,10 @@
 from pathlib import Path
 import sys
 import unittest
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
+from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from collect import DATA, STATIONS, LABELS, parse, load, future_points, SourceError
+from collect import DATA, STATIONS, LABELS, OWM, forecast, observation_range, parse, load, future_points, SourceError
 from score import scores
 
 
@@ -25,6 +26,31 @@ class Archive(unittest.TestCase):
                 self.assertLessEqual(len(doc["points"]),40)
                 if doc["model_initialization_utc"]:
                     self.assertLessEqual(parse(doc["model_initialization_utc"]),captured)
+
+    def test_openweather_schema_leaves_issue_unknown_and_stores_only_valid_temps(self):
+        now = datetime.now(timezone.utc)
+        next_hour = now.replace(hour=(now.hour // 3) * 3, minute=0, second=0, microsecond=0) + timedelta(hours=3)
+        raw = {"list": [{"dt": int((next_hour+timedelta(hours=3*i)).timestamp()), "main": {"temp": 0}}
+                        for i in range(40)]}
+        with patch("collect.get", return_value=raw) as get:
+            saved = forecast(OWM, STATIONS["langley"], now, None)
+        self.assertEqual(get.call_count, 1)
+        self.assertEqual(len(saved["points"]), 40)
+        self.assertIsNone(saved["provider_issue_utc"])
+        self.assertIsNone(saved["model_initialization_utc"])
+        self.assertEqual(saved["content_license"], "https://creativecommons.org/licenses/by-sa/4.0/")
+        self.assertNotIn("appid", saved)
+        self.assertNotIn("list", saved)
+
+    def test_observation_query_pads_local_dates_then_clips_by_exact_utc(self):
+        station = STATIONS["langley"]
+        start, end = parse("2026-11-15T00:00:00Z"), parse("2026-11-15T01:00:00Z")
+        times = ["2026-11-14T23:00:00", "2026-11-15T00:00:00", "2026-11-15T01:00:00", "2026-11-15T02:00:00"]
+        rows = [{"properties":{"CLIMATE_IDENTIFIER":station["climate_id"],"UTC_DATE":t,"TEMP":0}} for t in times]
+        with patch("collect.get", return_value={"features":rows,"numberMatched":4}) as request:
+            received = observation_range(station, start, end)
+        self.assertEqual(list(received), [times[1]+"Z", times[2]+"Z"])
+        self.assertEqual(request.call_args.args[1]["datetime"], "2026-11-14T00:00:00Z/2026-11-16T01:00:00Z")
 
     def test_incomplete_forecast_rejected(self):
         when = parse("2026-11-15T00:00:00Z")

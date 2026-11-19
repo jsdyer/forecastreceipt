@@ -32,6 +32,10 @@ def main():
                 page.select_option("#provider", "noaa-gfs")
                 page.wait_for_selector("#rows tr")
                 assert 38 <= page.locator("#rows tr").count() <= 40
+                page.wait_for_selector("#hour-rows tr")
+                page.locator("#valid-hour").select_option(index=1)
+                page.wait_for_selector("#hour-rows tr")
+                assert page.locator("#hour-rows a").first.get_attribute("href").startswith("./data/receipts/")
                 page.select_option("#station", "halifax")
                 page.wait_for_function("document.querySelector('#station-note').textContent.includes('8202251')")
                 page.select_option("#day", "5")

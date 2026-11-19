@@ -5,6 +5,7 @@
 <body data-tool-id="{{TOOL_ID}}"><a class="skip" href="#main">Skip to content</a>
 <header><a href="https://coolcode.ca/">← CoolCode</a><a href="https://coolcode.ca/weatherarchive/">Weather Archive ↗</a></header>
 <main id="main"><div class="mast"><p class="section-label">Station verification</p><h1>{{TITLE}}</h1><p class="intro">{{DESCRIPTION}}</p></div>
+<p>Choose an airport and follow one local hour. Each receipt saves what a provider predicted at the time. As later forecasts and the airport thermometer reading arrive, you can see what changed and how close each prediction came.</p>
 <p id="status" role="status">Loading saved forecasts…</p>
 <section class="card"><h2>Choose a forecast series</h2>
 <div class="controls"><label>Station<select id="station"></select></label><label>Forecast source<select id="provider"></select></label></div>
@@ -16,6 +17,11 @@
 <p id="score-note" class="note"></p><h3>Largest forecast revision</h3><p id="revision"></p></section>
 <section class="card"><div class="sectionhead"><h2>Inspect a receipt</h2><a id="download" hidden>Download receipt JSON ↓</a></div>
 <label>Capture time (UTC)<select id="receipt"></select></label><p id="receipt-info"></p>
+<div id="hour-panel" hidden><h3>Follow one weather hour</h3>
+<label>Local time at the station<select id="valid-hour"></select></label>
+<p id="history-result" aria-live="polite"></p>
+<div class="scroll"><table><thead><tr><th>Saved at (UTC)</th><th>Hours ahead</th><th>Forecast</th><th>Error</th></tr></thead><tbody id="hour-rows"></tbody></table></div>
+</div><h3>All hours in this receipt</h3>
 <div class="scroll" tabindex="0" aria-label="Three-hourly forecast and observation table"><table><thead><tr><th>Valid UTC</th><th>Station time</th><th>Forecast</th><th>Observed</th><th>Error</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div></section>
 <details class="card"><summary>Sources and method</summary><p>OpenWeather’s five-day API supplies three-hourly forecasts. The independent NOAA Global Forecast System series uses a fixed model run delivered by Open-Meteo. The archive saves future valid hours on a six-hour schedule. Lead time starts at capture. A model initialization time identifies the run. Neither feed supplies a public release timestamp for these receipts.</p>
 <p>Hourly station temperatures come from Environment and Climate Change Canada’s MSC GeoMet. A pair requires the same station and exact valid UTC hour with an unflagged temperature. A positive error means the forecast was warmer. An absent reading can arrive later. Missing observations remain blank.</p>

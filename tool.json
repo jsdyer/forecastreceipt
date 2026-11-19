@@ -1,7 +1,7 @@
 {
   "id": "forecastreceipt",
   "title": "Forecast Receipt",
-  "description": "See how a five-day temperature forecast holds up against hourly readings at Langley Regional and Halifax Stanfield.",
+  "description": "Follow one weather hour at Langley or Halifax from its first saved temperature forecast through later revisions to the airport reading.",
   "category": "places",
   "tags": [
     "weather",

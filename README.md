@@ -3,7 +3,7 @@
 [Open Forecast Receipt](https://coolcode.ca/forecastreceipt/) to audit temperature forecasts at Langley Regional, BC (ECCC climate ID 1104570) and Halifax Stanfield, NS (8202251). Select a station and provider, filter scores by lead, valid month and local time of day, then inspect the original timestamped receipt. [Weather Archive](https://coolcode.ca/weatherarchive/) explores daily records and station normals.
 
 <!-- coolcode:guide -->
-Choose an airport and compare the 0–24-hour and 96–120-hour results for one provider. Check each matched count and inspect the largest revision to see two predictions for the same local weather hour.
+Choose a receipt and a station-local hour. The hour history links every available prediction for that hour, its lead time and its error when ECCC has an unflagged reading. The first Langley GFS receipt predicted 3.8 °C for 06:00 UTC on November 19, 2026.
 <!-- /coolcode:guide -->
 
 ## Reading a receipt

@@ -1,33 +1,25 @@
 <!doctype html>
-<html lang="en-CA">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{{DESCRIPTION}}">
-  <title>{{TITLE}} · CoolCode</title>
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.mjs"></script>
-</head>
-<body data-tool-id="{{TOOL_ID}}">
-  <a class="skip" href="#main">Skip to content</a>
-  <header><a href="https://coolcode.ca/">← CoolCode.ca</a><a href="{{SOURCE_URL}}">Source &amp; instructions ↗</a></header>
-  <main id="main">
-    <p class="eyebrow">Browser tool starter</p>
-    <h1>{{TITLE}}</h1>
-    <p class="intro">{{DESCRIPTION}}</p>
-    <section aria-labelledby="example-title">
-      <h2 id="example-title">Clean a list</h2>
-      <p>Trim spaces, skip blank lines and remove exact duplicates. Capitalization stays distinct.</p>
-      <div class="panels">
-        <div><label for="input">Your lines</label><textarea id="input" rows="10" maxlength="100000" spellcheck="false" placeholder="Paste one item per line"></textarea></div>
-        <div><label for="output">Cleaned lines</label><textarea id="output" rows="10" readonly spellcheck="false"></textarea></div>
-      </div>
-      <div class="actions"><button id="sample" type="button">Load example</button><button id="clear" type="button">Clear</button><button id="copy" type="button" hidden>Copy result</button></div>
-      <p id="status" role="status" aria-live="polite">Paste a list to begin.</p>
-      <noscript><p>This tool needs JavaScript to process your text. The source is available above.</p></noscript>
-    </section>
-    <aside aria-label="Privacy"><strong>Stays on your device.</strong> This example makes no API requests and does not save your text. Reloading clears it.</aside>
-  </main>
-  <footer>Part of <a href="https://coolcode.ca/">the CoolCode collection</a>.</footer>
-</body>
-</html>
+<html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}} · CoolCode</title><meta name="description" content="{{DESCRIPTION}}">
+<link rel="stylesheet" href="./style.css"><script type="module" src="./app.mjs"></script></head>
+<body data-tool-id="{{TOOL_ID}}"><a class="skip" href="#main">Skip to content</a>
+<header><a href="https://coolcode.ca/">← CoolCode</a><a href="https://coolcode.ca/weatherarchive/">Weather Archive ↗</a></header>
+<main id="main"><div class="mast"><p class="section-label">Station verification</p><h1>{{TITLE}}</h1><p class="intro">{{DESCRIPTION}}</p></div>
+<p id="status" role="status">Loading saved forecasts…</p>
+<section class="card"><h2>Choose a forecast series</h2>
+<div class="controls"><label>Station<select id="station"></select></label><label>Forecast source<select id="provider"></select></label></div>
+<p id="availability"></p><p id="station-note" class="note"></p></section>
+<section class="card"><h2>Forecast accuracy</h2><p>Filter by the station’s local valid time and by hours from capture. Each matched forecast counts once, including successive forecasts for the same hour.</p>
+<div class="controls"><label>Valid month<select id="month"></select></label><label>Lead from capture<select id="day"><option value="">All five days</option><option value="1">0–24 hours</option><option value="2">&gt;24–48 hours</option><option value="3">&gt;48–72 hours</option><option value="4">&gt;72–96 hours</option><option value="5">&gt;96–120 hours</option></select></label>
+<label>Local time of day<select id="period"><option value="">All hours</option><option>Overnight</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label></div>
+<dl class="metrics"><div><dt>Matched forecasts</dt><dd id="matched">—</dd></div><div><dt>Mean absolute error</dt><dd id="mae">—</dd></div><div><dt>Signed bias</dt><dd id="bias">—</dd></div></dl>
+<p id="score-note" class="note"></p><h3>Largest forecast revision</h3><p id="revision"></p></section>
+<section class="card"><div class="sectionhead"><h2>Inspect a receipt</h2><a id="download" hidden>Download receipt JSON ↓</a></div>
+<label>Capture time (UTC)<select id="receipt"></select></label><p id="receipt-info"></p>
+<div class="scroll" tabindex="0" aria-label="Three-hourly forecast and observation table"><table><thead><tr><th>Valid UTC</th><th>Station time</th><th>Forecast</th><th>Observed</th><th>Error</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<details class="card"><summary>Sources and method</summary><p>OpenWeather’s five-day API supplies three-hourly forecasts. The independent NOAA Global Forecast System series uses a fixed model run delivered by Open-Meteo. The archive saves future valid hours on a six-hour schedule. Lead time starts at capture. A model initialization time identifies the run. Neither feed supplies a public release timestamp for these receipts.</p>
+<p>Hourly station temperatures come from Environment and Climate Change Canada’s MSC GeoMet. A pair requires the same station and exact valid UTC hour with an unflagged temperature. A positive error means the forecast was warmer. An absent reading can arrive later. Missing observations remain blank.</p>
+<p>Time-of-day bins use local civil time from midnight, 06:00, noon and 18:00. Revisions compare consecutive saved forecasts from the selected source for a single valid hour. The filters apply to the newer forecast. Forecast accuracy and revisions describe only these two stations and archived captures.</p>
+<p><a href="https://openweathermap.org/api/forecast5">Weather data © OpenWeather</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/">OpenWeather data under ODbL 1.0</a> · <a href="https://open-meteo.com/en/docs/single-runs-api">NOAA GFS via Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> · <a href="https://api.weather.gc.ca/collections/climate-hourly">ECCC hourly stations</a> · <a href="https://eccc-msc.github.io/open-data/licence/readme_en/">ECCC licence</a></p></details>
+<noscript>Enable JavaScript to inspect the station records, or open the archive on GitHub.</noscript></main>
+<footer><span>Forecast Receipt · CoolCode</span><a href="{{SOURCE_URL}}">Source and saved data ↗</a></footer></body></html>

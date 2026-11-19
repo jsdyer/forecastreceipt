@@ -1,0 +1,54 @@
+{
+ "checked": "2026-11-19T04:47:39Z",
+ "stations": {
+  "langley": {
+   "name": "Langley Regional",
+   "climate_id": "1104570",
+   "lat": 49.100833,
+   "lon": -122.630833,
+   "zone": "America/Vancouver"
+  },
+  "halifax": {
+   "name": "Halifax Stanfield",
+   "climate_id": "8202251",
+   "lat": 44.881111,
+   "lon": -63.508611,
+   "zone": "America/Halifax"
+  }
+ },
+ "providers": {
+  "noaa-gfs": "NOAA GFS via Open-Meteo",
+  "openweather": "OpenWeather"
+ },
+ "status": {
+  "langley": {
+   "noaa-gfs": "Captured for this six-hour window.",
+   "openweather": "Awaiting a configured OpenWeather feed.",
+   "observed": "Retrieved"
+  },
+  "halifax": {
+   "noaa-gfs": "Captured for this six-hour window.",
+   "openweather": "Awaiting a configured OpenWeather feed.",
+   "observed": "Retrieved"
+  }
+ },
+ "receipts": [
+  {
+   "station": "halifax",
+   "provider": "noaa-gfs",
+   "capture": "2026-11-19T04:43:20Z",
+   "count": 40,
+   "path": "receipts/2026-11/20261119T00-halifax-noaa-gfs.json"
+  },
+  {
+   "station": "langley",
+   "provider": "noaa-gfs",
+   "capture": "2026-11-19T04:43:08Z",
+   "count": 40,
+   "path": "receipts/2026-11/20261119T00-langley-noaa-gfs.json"
+  }
+ ],
+ "first_capture": "2026-11-19T04:43:08Z",
+ "last_capture": "2026-11-19T04:43:20Z",
+ "forecast_points": 80
+}

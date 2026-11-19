@@ -116,9 +116,12 @@ def forecast(provider, station, now, key):
 
 
 def observation_range(station, start, end):
+    # GeoMet's temporal query indexes local station dates. Pad each UTC chunk
+    # and select the precise UTC interval from returned UTC_DATE observations.
+    buffer = timedelta(days=1)
     raw = get("https://api.weather.gc.ca/collections/climate-hourly/items", {
         "f": "json", "CLIMATE_IDENTIFIER": station["climate_id"], "limit": 1000,
-        "datetime": f"{stamp(start)}/{stamp(end)}",
+        "datetime": f"{stamp(start-buffer)}/{stamp(end+buffer)}",
     })
     if raw.get("numberMatched", 0) > len(raw["features"]):
         raise SourceError("truncated station query")

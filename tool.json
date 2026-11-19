@@ -31,7 +31,8 @@
           ],
           "unit": "station forecasts",
           "measure": "length"
-        }
+        },
+        "precision": "minute"
       },
       {
         "url": "https://coolcode.ca/forecastreceipt/data/index.json",

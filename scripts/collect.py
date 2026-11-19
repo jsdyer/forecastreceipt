@@ -188,7 +188,7 @@ def main():
                     save(path, forecast(provider, station, now, key), exclusive=True)
                 statuses[slug][provider] = "Captured for this six-hour window."
                 fresh += 1
-            except (SourceError, KeyError, IndexError, ValueError):
+            except (SourceError, KeyError, IndexError, TypeError, ValueError, OverflowError):
                 statuses[slug][provider] = "Latest fetch unavailable. Previous receipts are retained."
         saved = sorted((DATA / "receipts").glob(f"*/*-{slug}-*.json"))
         first = parse(load(saved[0])["capture_utc"]) if saved else now

@@ -7,7 +7,55 @@ async function json(path) {
   if (!response.ok) throw Error('Unavailable file');
   return response.json();
 }
-let catalog, series, selection = 0, version = 0;
+let catalog, series, selection = 0, version = 0, hourRequest = 0;
+const receiptCache = new Map();
+function savedReceipt(path) {
+  if (!receiptCache.has(path)) {
+    // A chosen valid hour can occur only in the preceding five days of receipts.
+    if (receiptCache.size >= 40) receiptCache.delete(receiptCache.keys().next().value);
+    const request = json(path).catch(error => {receiptCache.delete(path); throw error;});
+    receiptCache.set(path, request);
+  }
+  return receiptCache.get(path);
+}
+
+async function showHour() {
+  const request = ++hourRequest;
+  const valid = el('valid-hour').value, rows = el('hour-rows');
+  rows.replaceChildren();
+  if (!valid) return;
+  text('history-result', 'Reading the saved forecasts for this hour…');
+  const at = Date.parse(valid);
+  const candidates = series.receipts.filter(r => {
+    const lead = at - Date.parse(r.capture);
+    return lead > 0 && lead <= 5 * 86400000;
+  }).slice().reverse();
+  const replies = await Promise.allSettled(candidates.map(r => savedReceipt(r.path)));
+  if (request !== hourRequest) return;
+  const obs = series.observed[valid], status = statusFor(valid, obs, catalog.checked);
+  const points = [];
+  let missing = 0;
+  for (const [i, reply] of replies.entries()) {
+    if (reply.status === 'rejected') { missing++; continue; }
+    const found = reply.value.points.find(([stamp]) => stamp === valid);
+    if (!found) continue;
+    const record = candidates[i];
+    points.push(found[1]);
+    const row = rows.insertRow(), link = document.createElement('a');
+    link.href = './data/' + record.path; link.textContent = utc(record.capture);
+    row.insertCell().append(link);
+    row.insertCell().textContent = ((at - Date.parse(record.capture)) / 3600000).toFixed(1);
+    row.insertCell().textContent = temp(found[1]);
+    row.insertCell().textContent = status === 'Matched' ? signed(found[1] - obs[0]) : '—';
+  }
+  const summary = points.length > 1
+    ? points.length + ' saved forecasts. The earliest predicted ' + temp(points[0]) + ' and the latest ' + temp(points.at(-1)) + '.'
+    : points.length ? 'One saved forecast predicted ' + temp(points[0]) + '.' : 'No forecast points available for this hour.';
+  const outcome = status === 'Matched' ? 'The airport measured ' + temp(obs[0]) + '. A positive error means a warm forecast.'
+    : status === 'Future' ? 'This hour was still in the future when the archive was checked.'
+    : status === 'Awaiting reading' ? 'The archive is waiting for the station reading.' : 'The station reading is flagged and excluded from scores.';
+  text('history-result', summary + ' ' + outcome + (missing ? ' Some receipt files could not be loaded.' : ''));
+}
 
 function metrics() {
   const rows = selectCells(series.cells, el('month').value, el('day').value, el('period').value);
@@ -38,11 +86,13 @@ function metrics() {
 async function receipt() {
   const mine = ++version;
   const chosen = el('receipt').value, info = el('receipt-info'), link = el('download'), body = el('rows');
+  ++hourRequest;
+  el('hour-panel').hidden = true;
   body.replaceChildren(); link.hidden = true;
   if (!chosen) { info.textContent = 'This provider has no saved receipt at this station.'; return; }
   info.textContent = 'Loading receipt…';
   try {
-    const doc = await json(chosen);
+    const doc = await savedReceipt(chosen);
     if (mine !== version) return;
     const zone = catalog.stations[series.station].zone;
     const fmt = new Intl.DateTimeFormat('en-CA',{timeZone:zone,month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZoneName:'short'});
@@ -57,6 +107,13 @@ async function receipt() {
       frag.append(row);
     }
     body.append(frag);
+    const previous = el('valid-hour').value;
+    el('valid-hour').replaceChildren(...doc.points.map(([valid]) => option(fmt.format(new Date(valid)), valid)));
+    const firstMatched = doc.points.find(([valid]) => statusFor(valid, series.observed[valid], catalog.checked) === 'Matched');
+    if (doc.points.some(([valid]) => valid === previous)) el('valid-hour').value = previous;
+    else if (firstMatched) el('valid-hour').value = firstMatched[0];
+    el('hour-panel').hidden = false;
+    showHour();
     info.textContent = `${doc.points.length} forecast hours sampled at three-hour intervals. Captured ${utc(doc.capture_utc)}. ` +
       (doc.model_initialization_utc ? `Model initialized ${utc(doc.model_initialization_utc)}.` : 'OpenWeather does not publish an issue timestamp in this response.');
     link.href = './data/' + chosen; link.download = chosen.split('/').at(-1); link.hidden = false;
@@ -64,13 +121,14 @@ async function receipt() {
 }
 
 async function changeSeries() {
-  const mine = ++selection; ++version;
+  const mine = ++selection; ++version; ++hourRequest;
+  el('hour-panel').hidden = true;
   const station = el('station').value, provider = el('provider').value;
   try {
     const [cells, observed] = await Promise.all([json(`scores/${station}-${provider}.json`), json(`observed/${station}.json`)]);
     if (mine !== selection) return;
     const receipts = catalog.receipts.filter(x => x.station === station && x.provider === provider).sort((a,b) => b.capture.localeCompare(a.capture));
-    series = {station, provider, cells, observed};
+    series = {station, provider, cells, observed, receipts};
     el('gfs-credit').hidden = provider !== 'noaa-gfs';
     el('ow-credit').hidden = provider !== 'openweather';
     const months = [...new Set(cells.map(c => c.month))].sort().reverse();
@@ -104,6 +162,7 @@ async function start() {
     for (const id of ['station','provider']) el(id).addEventListener('change', changeSeries);
     for (const id of ['month','day','period']) el(id).addEventListener('change', () => { if (series) metrics(); });
     el('receipt').addEventListener('change', receipt);
+    el('valid-hour').addEventListener('change', showHour);
     await changeSeries();
   } catch { text('status','The archive could not be loaded. Reload to retry.'); }
 }

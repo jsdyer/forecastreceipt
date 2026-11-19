@@ -71,6 +71,8 @@ async function changeSeries() {
     if (mine !== selection) return;
     const receipts = catalog.receipts.filter(x => x.station === station && x.provider === provider).sort((a,b) => b.capture.localeCompare(a.capture));
     series = {station, provider, cells, observed};
+    el('gfs-credit').hidden = provider !== 'noaa-gfs';
+    el('ow-credit').hidden = provider !== 'openweather';
     const months = [...new Set(cells.map(c => c.month))].sort().reverse();
     const oldMonth = el('month').value;
     el('month').replaceChildren(option('All months',''), ...months.map(m => option(m,m)));

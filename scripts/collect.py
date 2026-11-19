@@ -111,6 +111,7 @@ def forecast(provider, station, now, key):
     return {"provider": provider, "station_id": station["climate_id"], "coordinates": point,
             "capture_utc": stamp(captured), "model_initialization_utc": stamp(run) if run else None,
             "provider_issue_utc": None, "units": "°C", "attribution": LABELS[provider], "data_license": LICENSES[provider],
+            "content_license": "https://creativecommons.org/licenses/by-sa/4.0/" if provider == OWM else LICENSES[GFS],
             "columns": ["valid_utc", "forecast_c"], "points": future_points(points, captured)}
 
 

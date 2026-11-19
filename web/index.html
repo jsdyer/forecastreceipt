@@ -8,7 +8,7 @@
 <p id="status" role="status">Loading saved forecasts…</p>
 <section class="card"><h2>Choose a forecast series</h2>
 <div class="controls"><label>Station<select id="station"></select></label><label>Forecast source<select id="provider"></select></label></div>
-<p id="availability"></p><p id="station-note" class="note"></p></section>
+<p id="availability"></p><p id="gfs-credit">Forecast data from <a href="https://open-meteo.com/en/docs/single-runs-api">NOAA GFS via Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p><p id="ow-credit" hidden><a class="ow" href="https://openweathermap.org/">Weather data © OpenWeather</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 content</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0 database</a>.</p><p id="station-note" class="note"></p></section>
 <section class="card"><h2>Forecast accuracy</h2><p>Filter by the station’s local valid time and by hours from capture. Each matched forecast counts once, including successive forecasts for the same hour.</p>
 <div class="controls"><label>Valid month<select id="month"></select></label><label>Lead from capture<select id="day"><option value="">All five days</option><option value="1">0–24 hours</option><option value="2">&gt;24–48 hours</option><option value="3">&gt;48–72 hours</option><option value="4">&gt;72–96 hours</option><option value="5">&gt;96–120 hours</option></select></label>
 <label>Local time of day<select id="period"><option value="">All hours</option><option>Overnight</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label></div>

@@ -1,0 +1,50 @@
+from pathlib import Path
+import sys
+import unittest
+from datetime import timedelta
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from collect import DATA, STATIONS, LABELS, parse, load, future_points, SourceError
+from score import scores
+
+
+class Archive(unittest.TestCase):
+    def test_archive_identity_future_only_and_exact_forecast_sampling(self):
+        idx = load(DATA / "index.json")
+        for slug, station in STATIONS.items():
+            obs = load(DATA / "observed" / (slug + ".json"))
+            self.assertTrue(any(isinstance(x[0], (int,float)) and not x[1] for x in obs.values()))
+            self.assertTrue(any(row["station"] == slug for row in idx["receipts"]))
+            for provider in LABELS:
+                self.assertIsInstance(load(DATA / "scores" / f"{slug}-{provider}.json"), list)
+            for row in [r for r in idx["receipts"] if r["station"] == slug]:
+                doc = load(DATA / row["path"])
+                self.assertEqual(doc["provider"], row["provider"])
+                self.assertEqual(doc["station_id"], station["climate_id"])
+                captured = parse(doc["capture_utc"])
+                self.assertEqual([list(p) for p in future_points([(parse(t),v) for t,v in doc["points"]],captured)],doc["points"])
+                self.assertLessEqual(len(doc["points"]),40)
+                if doc["model_initialization_utc"]:
+                    self.assertLessEqual(parse(doc["model_initialization_utc"]),captured)
+
+    def test_incomplete_forecast_rejected(self):
+        when = parse("2026-11-15T00:00:00Z")
+        with self.assertRaises(SourceError):
+            future_points([(when,0), (when+timedelta(hours=3), 4)],when)
+
+    def test_revision_precedes_target_and_scores_exclude_flags_and_missing(self):
+        valid = "2026-11-19T06:00:00Z"
+        other = "2026-11-19T09:00:00Z"
+        attached = [({"path":"a"},{"capture_utc":"2026-11-17T05:00:00Z","points":[[valid,2],[other,4]]}),
+                    ({"path":"b"},{"capture_utc":"2026-11-18T05:00:00Z","points":[[valid,-1],[other,6]]})]
+        obs = {valid:[0,None],other:[2,"E"]}
+        cells = scores(attached,obs,"America/Vancouver",parse("2026-11-20T00:00:00Z"))
+        self.assertEqual(sum(x["matched"] for x in cells),2)
+        self.assertEqual(sum(x["eligible"] for x in cells),4)
+        self.assertEqual(sum(x["sum_error"] for x in cells),1)
+        self.assertEqual(sum(x["sum_absolute"] for x in cells),3)
+        cell = next(x for x in cells if x["day"]==2 and x["period"]=="Evening")
+        self.assertEqual(cell["largest_revision"]["change"],-3)
+        self.assertEqual(cell["largest_revision"]["before"]["path"],"a")
+
+if __name__ == "__main__":
+    unittest.main()

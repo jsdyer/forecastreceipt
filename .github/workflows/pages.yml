@@ -3,11 +3,51 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: forecastreceipt-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
+  collect:
+    if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.preserve.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Capture forecasts and reconcile station readings
+        env:
+          OPENWEATHER_ENABLED: ${{ vars.OPENWEATHER_ENABLED }}
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+        run: python3 scripts/collect.py
+      - name: Validate and preserve archive
+        id: preserve
+        run: |
+          python3 -m unittest discover -s tests -v
+          python3 scripts/build.py
+          git add web/data/
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "Save prospective forecast receipts and station readings"
+            git push origin HEAD:main
+          fi
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
   build:
+    needs: collect
+    if: always() && (needs.collect.result == 'success' || needs.collect.result == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -16,6 +56,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+          ref: ${{ needs.collect.outputs.revision || github.sha }}
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
@@ -66,7 +107,7 @@ jobs:
         with:
           path: dist
   deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.outputs.publish == 'true'
+    if: always() && needs.build.result == 'success' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.outputs.publish == 'true'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10

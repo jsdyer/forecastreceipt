@@ -1,0 +1,202 @@
+[
+ {
+  "month": "2026-11",
+  "day": 1,
+  "period": "Afternoon",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 1,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 1,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 1,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 2,
+  "period": "Afternoon",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 2,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 2,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 2,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 3,
+  "period": "Afternoon",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 3,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 3,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 3,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 4,
+  "period": "Afternoon",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 4,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 4,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 4,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 5,
+  "period": "Afternoon",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 5,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 5,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ },
+ {
+  "month": "2026-11",
+  "day": 5,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": null
+ }
+]

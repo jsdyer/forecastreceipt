@@ -1,115 +1,45 @@
-# CoolCode browser tool template
+# Forecast Receipt
 
-A starting point for independent tools at `coolcode.ca/<repo>/`: a working local-text
-example, responsive UI, Python standard-library build, Node tests, PR checks and Pages
-publication. No npm install is needed.
-
-## Using the example
+[Open Forecast Receipt](https://coolcode.ca/forecastreceipt/) to audit temperature forecasts at Langley Regional, BC (ECCC climate ID 1104570) and Halifax Stanfield, NS (8202251). Select a station and provider, filter scores by lead, valid month and local time of day, then inspect the original timestamped receipt. [Weather Archive](https://coolcode.ca/weatherarchive/) explores daily records and station normals.
 
 <!-- coolcode:guide -->
-The first occurrence of each trimmed line keeps its place. Compare the output with the original text before copying the result.
+Choose an airport and compare the 0–24-hour and 96–120-hour results for one provider. Check each matched count and inspect the largest revision to see two predictions for the same local weather hour.
 <!-- /coolcode:guide -->
 
-For a real tool, replace this paragraph with one or two plain-text sentences
-about an example, a limit or how to interpret the results. Keep the source,
-coverage, refresh behaviour and a worked example in this README as appropriate.
-When updating a tool, revise any details its behaviour has changed and keep the
-homepage's shorter data-source sentence in `tool.json` accurate.
-The hub imports the marked note into the catalogue README.
+## Reading a receipt
 
-## One-time template setup
+Each UTC six-hour window can add one immutable five-day receipt per station and provider. A new receipt saves up to 40 future temperatures at three-hour intervals. The slot name identifies the scheduled window, while the JSON records actual wall-clock capture time. It also records the exact GFS model initialization if supplied. The OpenWeather endpoint reports UTC valid times but omits a provider issue timestamp. All lead times therefore use capture to valid time, across both providers.
 
-Enable **Settings → General → Template repository** here. This repository does not
-need Pages enabled: its workflow builds/tests but intentionally skips deployment.
-New copies also skip deployment until `scripts/init.py` sets the tool ID to match
-their repository name. This lets you create the repo before configuring Pages.
+The pilot began on 19 November 2026. Earlier measured readings give station context. A receipt can earn its first score only after a valid hour passes and ECCC publishes that hour. Occasional outages and source delays can leave gaps. The archive never fills a missed capture with a later download. When assessing two providers, select each separately and compare their dates and counts.
 
-## Start a new tool
+- Signed bias is mean forecast minus observation. Positive bias indicates warm forecasts.
+- Mean absolute error is the mean of the absolute differences, in degrees Celsius. Each eligible saved forecast counts separately, even when several receipts cover the same valid hour.
+- A matched pair needs an exact UTC timestamp, a numerical ECCC temperature and an empty temperature flag. Flagged station values are displayed but excluded from scoring. Missing hours remain blank.
+- Day 1 covers positive lead through 24 hours and each following bin covers the next 24 hours. Valid month and overnight (00–06), morning (06–12), afternoon (12–18) and evening (18–24) use the station’s local civil time.
+- A revision compares two adjacent available receipts for the same station, forecast provider and valid UTC time. Filters apply to the newer receipt. The largest absolute change links to both original records; a tie uses one of the tied records.
 
-1. Select **Use this template → Create a new repository**, choose owner `jsdyer`,
-   a unique lowercase name such as `my-tool`, and public visibility.
-2. Clone the new repository. Use Python 3.12+ and Node 24+.
-3. Set the identity, using a slug that matches the repository name:
+## Data and reuse
 
-```sh
-python3 scripts/init.py my-tool --title "My Tool" --description "Describe what this tool does."
-```
+| Source | Role and terms |
+| --- | --- |
+| [OpenWeather 5 day / 3 hour forecast](https://openweathermap.org/api/forecast5) | Weather data © OpenWeather. The OpenWeather forecast and derived verification database (when present) is offered under the [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Download the individual receipts, scores and station inputs from `web/data/` or clone this repository for the database. [Provider licensing](https://openweathermap.org/full-price#licenses). |
+| [NOAA GFS via Open-Meteo Single Runs](https://open-meteo.com/en/docs/single-runs-api) | Independent model series offered under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Fixed model run, station-point extraction, rounded temperature and three-hour subsampling. This noncommercial pilot uses the [free API](https://open-meteo.com/en/terms). |
+| [Environment and Climate Change Canada hourly station observations](https://api.weather.gc.ca/collections/climate-hourly) | Fields UTC_DATE, TEMP and TEMP_FLAG, with ECCC climate identifier verification. Contains information licensed under the [ECCC Data Services End-use Licence](https://eccc-msc.github.io/open-data/licence/readme_en/). Station measurements and a gridded forecast can represent different local conditions. |
 
-Review the category, tags and icon in `tool.json`. `access: "browser"` tells the main
-catalogue that the tool works immediately without installation. `--owner` supports a different
-GitHub owner, but only projects owned by `jsdyer` inherit the CoolCode domain.
+## Update and operation
 
-4. Replace the example in `web/` and its tests. Update the privacy explanation,
-   source attribution and README to describe the real tool.
-5. Test and preview:
+The main Pages workflow builds from saved files on push. On schedule (00:17, 06:17, 12:17, 18:17 UTC) or a manual main-branch dispatch, it also collects forecasts and observations, validates the site, commits data and deploys in the same run. A failed build leaves the previous deployment in place. Successful captures survive later source outages. Recent measurements are checked for revisions over a fourteen-day window, with a catch-up cursor after longer gaps. Source timestamps, source-specific availability and latest measured hour are visible in the app.
+
+OpenWeather collection is opt-in. Configure a fresh GitHub Actions repository secret named `OPENWEATHER_API_KEY` and set the repository variable `OPENWEATHER_ENABLED` to `true` after configuring the intended key. No key is needed for the NOAA/ECCC series. The collector reads credentials server-side, never logs a query URL and publishes no credentials. Visitors request static files from the site. They provide no location and make no weather API requests.
+
+Run with Python 3.12+ and Node 24+. From the repository root:
 
 ```sh
+python3 scripts/collect.py
 node --test tests/*.test.mjs
 python3 -m unittest discover -s tests -v
 python3 scripts/build.py
 python3 -m http.server 8000 --directory dist
 ```
 
-Open `http://localhost:8000/`. The example trims lines, skips blanks and removes exact
-duplicates, preserving first-seen order and capitalization. It makes no API requests
-and does not persist text. Update that explanation if your app behaves differently.
-
-CI also tests the browser flow and mobile layout at a project subpath. Replace the
-sample assertions in `tests/browser_smoke.py` when implementing your own UI. To run
-that check locally (optional for ordinary preview):
-
-```sh
-python3 -m venv .venv
-. .venv/bin/activate
-python3 -m pip install -r tests/browser-requirements.txt
-python3 -m playwright install --with-deps chromium
-python3 tests/browser_smoke.py
-```
-
-Playwright is a test-only dependency; the app and its static build do not use it.
-
-## Publish and register
-
-When the actual tool is ready, in the **new tool repository** set **Settings → Pages → Build and deployment →
-Source → GitHub Actions**. Push to `main`, or manually run **Browser tool · Check and
-publish** after enabling Pages. If the initial deployment ran before Pages was enabled,
-enable it and rerun. PRs only check/build and provide a downloadable preview artifact.
-
-Keep asset paths and module imports relative. Check `https://coolcode.ca/my-tool/`.
-Do not add a CNAME or set `coolcode.ca` as this project's custom domain; the account
-site supplies it. Only successful `main` builds deploy.
-
-After verifying the app, copy the reviewed object from `tool.json` into `data/tools.json`
-in [the main site](https://github.com/jsdyer/jsdyer.github.io). Each tool still builds
-independently. Update the hub record when listing metadata changes; the hub is the
-authority for discovery. Ordinary app updates touch only this repository.
-
-The main site separates **Use in your browser** from **Install yourself**. An app
-that asks for a file is still a browser tool. Standalone Linux packages should start
-in their own repositories with their own build/release workflow, rather than copying
-this browser-only scaffold. Their hub record uses `access: "install"`, links to an
-installation guide, and includes `requirements`.
-
-## Files
-
-| Path | Purpose |
-| --- | --- |
-| `tool.json` | Page metadata and a ready-to-copy catalogue record |
-| `web/` | HTML, responsive CSS, DOM interactions and separate model logic |
-| `scripts/build.py` | Escape metadata and build `web/` into `dist/` |
-| `scripts/init.py` | Set a new project's identity |
-| `tests/` | Application and builder tests |
-| `.github/workflows/pages.yml` | Check PRs and publish successful main builds |
-| `AGENTS.md` | Instructions for future coding work |
-
-Namespace optional storage as `coolcode:<tool-id>:<key>`; CoolCode paths share a
-browser origin. Don't save pasted text/uploads by default. Document external APIs
-and send only the information needed for the selected action. Never embed secrets.
-
-Scheduled refresh is opt-in. Validate source data before deploying, display its date,
-and preserve the last good deployment on failure. Public-repository schedules can
-stop after 60 days without repository activity.
-
-Templates don't propagate future edits automatically. Adopt fixes explicitly and
-consider a versioned reusable workflow once several tools confirm the shared process.
-Choose and add the intended software license before distributing a new project.
+The build and application tests also work offline with the committed archive. For the optional browser check, install `tests/browser-requirements.txt`, install Playwright Chromium, then run `python3 tests/browser_smoke.py`.

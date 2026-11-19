@@ -175,7 +175,7 @@ def main():
     now = datetime.now(UTC)
     slot = now.replace(hour=(now.hour // 6) * 6, minute=0, second=0, microsecond=0)
     statuses, fresh = {}, 0
-    key = os.environ.get("OPENWEATHER_API_KEY") if os.environ.get("OPENWEATHER_ENABLED") == "true" else None
+    key = os.environ.get("COOLCODE_OPENWEATHER_API_KEY")
     for slug, station in STATIONS.items():
         statuses[slug] = {}
         for provider in (GFS, OWM):

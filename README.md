@@ -30,7 +30,7 @@ The pilot began on 19 November 2026. Earlier measured readings give station cont
 
 The main Pages workflow builds from saved files on push. On schedule (00:17, 06:17, 12:17, 18:17 UTC) or a manual main-branch dispatch, it also collects forecasts and observations, validates the site, commits data and deploys in the same run. A failed build leaves the previous deployment in place. Successful captures survive later source outages. Recent measurements are checked for revisions over a fourteen-day window, with a catch-up cursor after longer gaps. Source timestamps, source-specific availability and latest measured hour are visible in the app.
 
-OpenWeather collection is opt-in. Configure a fresh GitHub Actions repository secret named `OPENWEATHER_API_KEY` and set the repository variable `OPENWEATHER_ENABLED` to `true` after configuring the intended key. No key is needed for the NOAA/ECCC series. The collector reads credentials server-side, never logs a query URL and publishes no credentials. Visitors request static files from the site. They provide no location and make no weather API requests.
+OpenWeather collection is opt-in. To enable it, add a fresh key as the GitHub Actions repository secret `COOLCODE_OPENWEATHER_API_KEY`. The next scheduled capture picks it up. No key is needed for the NOAA/ECCC series. The collector reads credentials server-side, never logs a query URL and publishes no credentials. Visitors request static files from the site. They provide no location and make no weather API requests.
 
 Run with Python 3.12+ and Node 24+. From the repository root:
 

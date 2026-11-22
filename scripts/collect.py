@@ -177,6 +177,10 @@ def manifest(data, statuses, checked):
 def main():
     now = datetime.now(UTC)
     slot = now.replace(hour=(now.hour // 6) * 6, minute=0, second=0, microsecond=0)
+    if output_path := os.environ.get("GITHUB_OUTPUT"):
+        with open(output_path, "a") as output:
+            print(f"slot={stamp(slot)}", file=output)
+            print(f"openweather={str(bool(os.environ.get('COOLCODE_OPENWEATHER_API_KEY'))).lower()}", file=output)
     statuses, fresh = {}, 0
     key = os.environ.get("COOLCODE_OPENWEATHER_API_KEY")
     for slug, station in STATIONS.items():

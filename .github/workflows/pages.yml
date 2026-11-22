@@ -20,6 +20,8 @@ jobs:
       contents: write
     outputs:
       revision: ${{ steps.preserve.outputs.revision }}
+      slot: ${{ steps.capture.outputs.slot }}
+      openweather: ${{ steps.capture.outputs.openweather }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -28,6 +30,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Capture forecasts and reconcile station readings
+        id: capture
         env:
           COOLCODE_OPENWEATHER_API_KEY: ${{ secrets.COOLCODE_OPENWEATHER_API_KEY }}
         run: python3 scripts/collect.py
@@ -44,6 +47,45 @@ jobs:
             git push origin HEAD:main
           fi
           echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  monitor:
+    needs: collect
+    if: always() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        if: needs.collect.result == 'success'
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify the saved six-hour window on main
+        id: verify
+        if: needs.collect.result == 'success'
+        env:
+          SLOT: ${{ needs.collect.outputs.slot }}
+          REVISION: ${{ needs.collect.outputs.revision }}
+          OPENWEATHER: ${{ needs.collect.outputs.openweather }}
+        run: |
+          git merge-base --is-ancestor "$REVISION" HEAD
+          flags=()
+          if [[ "$OPENWEATHER" == true ]]; then flags+=(--openweather); fi
+          python3 scripts/verify_window.py "$SLOT" "$REVISION" "${flags[@]}"
+      - name: Report collector result to Healthchecks.io
+        if: always()
+        env:
+          PING_URL: ${{ secrets.HEALTHCHECKS_PING_URL }}
+          VERIFIED: ${{ needs.collect.result == 'success' && steps.verify.outcome == 'success' }}
+        run: |
+          if [[ -z "$PING_URL" ]]; then
+            echo 'Healthchecks.io is inactive. Set HEALTHCHECKS_PING_URL to enable missed-run alerts.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          suffix=/fail
+          if [[ "$VERIFIED" == true ]]; then suffix=''; fi
+          curl --disable --silent --fail --output /dev/null --max-time 12 --retry 2 --retry-all-errors \
+            --request POST "${PING_URL%/}$suffix" || { echo 'Healthchecks.io did not acknowledge the ping.'; exit 1; }
+          echo "Healthchecks.io acknowledged the collector result (verified=$VERIFIED)." >> "$GITHUB_STEP_SUMMARY"
   build:
     needs: collect
     if: always() && (needs.collect.result == 'success' || needs.collect.result == 'skipped')

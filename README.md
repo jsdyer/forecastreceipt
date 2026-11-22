@@ -43,3 +43,9 @@ python3 -m http.server 8000 --directory dist
 ```
 
 The build and application tests also work offline with the committed archive. For the optional browser check, install `tests/browser-requirements.txt`, install Playwright Chromium, then run `python3 tests/browser_smoke.py`.
+
+### Missed-capture alerts
+
+Create a check at [Healthchecks.io](https://healthchecks.io/), select **Cron**, set the expression to `17 */6 * * *` in **UTC**, and allow 90 minutes of grace for GitHub scheduling delays. Enable your preferred notification channel. Copy the check’s complete ping URL into this repository under **Settings → Secrets and variables → Actions → New repository secret**, named `HEALTHCHECKS_PING_URL`. Keep the URL private. Run **Browser tool · Check and publish → Run workflow** on `main` once to test it.
+
+A successful check means the saved Git revision on main contains a complete, indexed forecast for Langley and Halifax in the collector’s six-hour UTC slot. It checks NOAA GFS and, when configured, OpenWeather. Reruns verify the existing receipts for that slot. A failed collection, push or verification sends a failure signal. A run that never starts produces a missed-run alert after grace. This check measures forecast capture. ECCC observation availability is reported separately in the tool. Without a ping URL, archive verification and publication still run.

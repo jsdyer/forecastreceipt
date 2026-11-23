@@ -17,7 +17,7 @@
   "data_info": {
     "mode": "snapshot",
     "detail": "Six-hourly forecast receipts are matched to hourly temperatures from Environment and Climate Change Canada at two airports.",
-    "cadence": "Every six hours",
+    "cadence": "Every 6 hours",
     "probes": [
       {
         "url": "https://coolcode.ca/forecastreceipt/data/index.json",

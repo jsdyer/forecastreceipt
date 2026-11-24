@@ -49,3 +49,11 @@ The build and application tests also work offline with the committed archive. Fo
 Create a check at [Healthchecks.io](https://healthchecks.io/), select **Cron**, set the expression to `17 */6 * * *` in **UTC**, and allow 90 minutes of grace for GitHub scheduling delays. Enable your preferred notification channel. Copy the check’s complete ping URL into this repository under **Settings → Secrets and variables → Actions → New repository secret**, named `HEALTHCHECKS_PING_URL`. Keep the URL private. Run **Browser tool · Check and publish → Run workflow** on `main` once to test it.
 
 A successful check means the saved Git revision on main contains a complete, indexed forecast for Langley and Halifax in the collector’s six-hour UTC slot. It checks NOAA GFS and, when configured, OpenWeather. Reruns verify the existing receipts for that slot. A failed collection, push or verification sends a failure signal. A run that never starts produces a missed-run alert after grace. This check measures forecast capture. ECCC observation availability is reported separately in the tool. Without a ping URL, archive verification and publication still run.
+
+<!-- schedule-reliability -->
+## Schedule reliability
+
+Public GitHub repositories can have scheduled workflows disabled after 60 days of inactivity. A separate weekly [schedule guard](.github/workflows/schedule-guard.yml) calls GitHub's enable-workflow API for an explicit list of refresh workflows and itself. It can restore workflows disabled for inactivity, preserves manually disabled workflows, and runs independently of collection failures.
+
+This is an interim mitigation, not a scheduling guarantee: GitHub does not document active-workflow renewal as a permanent exemption, and scheduled runs can be delayed or dropped. A scheduler on our own Linux server is the planned independent trigger. The guard does not collect data, create dummy commits, or change source/check timestamps; successful collection and published data freshness still need monitoring.
+<!-- /schedule-reliability -->

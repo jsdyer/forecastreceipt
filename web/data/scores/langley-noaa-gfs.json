@@ -49,22 +49,22 @@
   "month": "2026-11",
   "day": 1,
   "period": "Morning",
-  "eligible": 26,
+  "eligible": 34,
   "matched": 26,
   "sum_error": 5.6,
   "sum_absolute": 45.4,
   "largest_revision": {
-   "valid": "2026-11-24T18:00:00Z",
-   "change": 1.1,
+   "valid": "2026-11-26T15:00:00Z",
+   "change": -2.8,
    "before": {
-    "capture": "2026-11-23T23:50:18Z",
-    "forecast": 5.9,
-    "path": "receipts/2026-11/20261123T18-langley-noaa-gfs.json"
+    "capture": "2026-11-25T14:23:00Z",
+    "forecast": 11.0,
+    "path": "receipts/2026-11/20261125T12-langley-noaa-gfs.json"
    },
    "after": {
-    "capture": "2026-11-24T08:26:47Z",
-    "forecast": 7.0,
-    "path": "receipts/2026-11/20261124T06-langley-noaa-gfs.json"
+    "capture": "2026-11-25T20:23:32Z",
+    "forecast": 8.2,
+    "path": "receipts/2026-11/20261125T18-langley-noaa-gfs.json"
    }
   }
  },
@@ -141,7 +141,7 @@
   "month": "2026-11",
   "day": 2,
   "period": "Morning",
-  "eligible": 20,
+  "eligible": 26,
   "matched": 20,
   "sum_error": 7.7,
   "sum_absolute": 35.1,
@@ -233,7 +233,7 @@
   "month": "2026-11",
   "day": 3,
   "period": "Morning",
-  "eligible": 16,
+  "eligible": 20,
   "matched": 16,
   "sum_error": -16.2,
   "sum_absolute": 34.6,
@@ -261,17 +261,17 @@
   "sum_error": -19.4,
   "sum_absolute": 37.4,
   "largest_revision": {
-   "valid": "2026-11-23T12:00:00Z",
-   "change": -2.5,
+   "valid": "2026-11-28T12:00:00Z",
+   "change": 2.7,
    "before": {
-    "capture": "2026-11-20T00:35:58Z",
-    "forecast": 4.3,
-    "path": "receipts/2026-11/20261120T00-langley-noaa-gfs.json"
+    "capture": "2026-11-25T14:23:00Z",
+    "forecast": 3.4,
+    "path": "receipts/2026-11/20261125T12-langley-noaa-gfs.json"
    },
    "after": {
-    "capture": "2026-11-20T15:23:56Z",
-    "forecast": 1.8,
-    "path": "receipts/2026-11/20261120T12-langley-noaa-gfs.json"
+    "capture": "2026-11-25T20:23:32Z",
+    "forecast": 6.1,
+    "path": "receipts/2026-11/20261125T18-langley-noaa-gfs.json"
    }
   }
  },
@@ -325,7 +325,7 @@
   "month": "2026-11",
   "day": 4,
   "period": "Morning",
-  "eligible": 12,
+  "eligible": 16,
   "matched": 12,
   "sum_error": -20.7,
   "sum_absolute": 21.1,
@@ -417,7 +417,7 @@
   "month": "2026-11",
   "day": 5,
   "period": "Morning",
-  "eligible": 7,
+  "eligible": 12,
   "matched": 7,
   "sum_error": -17.7,
   "sum_absolute": 17.7,

@@ -5,20 +5,20 @@
 </head>
 <body data-tool-id="{{TOOL_ID}}"><a class="skip" href="#main">Skip to content</a>
 <header><a href="https://coolcode.ca/">← CoolCode</a><a href="https://coolcode.ca/weatherarchive/">Weather Archive ↗</a></header>
-<main id="main"><div class="mast"><p class="section-label">Station verification</p><h1>{{TITLE}}</h1><p class="intro">{{DESCRIPTION}}</p></div>
-<p>Choose an airport and follow one local hour. Each receipt saves what a provider predicted at the time. As later forecasts and the airport thermometer reading arrive, you can see what changed and how close each prediction came.</p>
+<main id="main"><div class="mast"><p class="section-label">Airport weather</p><h1>{{TITLE}}</h1><p class="intro">{{DESCRIPTION}}</p></div>
 <p id="status" role="status">Loading saved forecasts…</p>
-<section class="card"><h2>Choose a forecast series</h2>
-<div class="controls"><label>Station<select id="station"></select></label><label>Forecast source<select id="provider"></select></label></div>
-<p id="availability"></p><p id="gfs-credit">Forecast data from <a href="https://open-meteo.com/en/docs/single-runs-api">NOAA GFS via Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p><p id="ow-credit" hidden><a class="ow" href="https://openweathermap.org/">Weather data © OpenWeather</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 content</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0 database</a>.</p><p id="station-note" class="note"></p></section>
+<section class="card"><h2>How close was the forecast?</h2>
+<div class="controls"><label>Airport<select id="station"></select></label><label>Forecast source<select id="provider"></select></label></div>
+<p id="example" class="intro" role="status">Reading the selected airport’s forecasts…</p><a id="example-link" href="#hour-panel" hidden>See the forecasts for this hour ↓</a>
+<details><summary>Archive and source details</summary><p id="availability"></p><p id="station-note" class="note"></p></details><p id="gfs-credit">Forecast data from <a href="https://open-meteo.com/en/docs/single-runs-api">NOAA GFS via Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p><p id="ow-credit" hidden><a class="ow" href="https://openweathermap.org/">Weather data © OpenWeather</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0 content</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0 database</a>.</p></section>
 <section class="card"><h2>Forecast accuracy</h2><p>Filter by the station’s local valid time and by hours from capture. Each matched forecast counts once, including successive forecasts for the same hour.</p>
 <div class="controls"><label>Valid month<select id="month"></select></label><label>Lead from capture<select id="day"><option value="">All five days</option><option value="1">0–24 hours</option><option value="2">&gt;24–48 hours</option><option value="3">&gt;48–72 hours</option><option value="4">&gt;72–96 hours</option><option value="5">&gt;96–120 hours</option></select></label>
 <label>Local time of day<select id="period"><option value="">All hours</option><option>Overnight</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label></div>
 <dl class="metrics"><div><dt>Matched forecasts</dt><dd id="matched">—</dd></div><div><dt>Mean absolute error</dt><dd id="mae">—</dd></div><div><dt>Signed bias</dt><dd id="bias">—</dd></div></dl>
 <p id="score-note" class="note"></p><h3>Largest forecast revision</h3><p id="revision"></p></section>
-<section class="card"><div class="sectionhead"><h2>Inspect a receipt</h2><a id="download" hidden>Download receipt JSON ↓</a></div>
+<section class="card"><div class="sectionhead"><h2>Explore a saved forecast</h2><a id="download" hidden>Download receipt JSON ↓</a></div>
 <label>Capture time (UTC)<select id="receipt"></select></label><p id="receipt-info"></p>
-<div id="hour-panel" hidden><h3>Follow one weather hour</h3>
+<div id="hour-panel" hidden><h3>How the forecast changed for one hour</h3>
 <label>Local time at the station<select id="valid-hour"></select></label>
 <p id="history-result" aria-live="polite"></p>
 <div class="scroll"><table><thead><tr><th>Saved at (UTC)</th><th>Hours ahead</th><th>Forecast</th><th>Error</th></tr></thead><tbody id="hour-rows"></tbody></table></div>

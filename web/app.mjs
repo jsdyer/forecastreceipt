@@ -83,7 +83,7 @@ function metrics() {
   }
 }
 
-async function receipt() {
+async function receipt(exampleHour = '') {
   const mine = ++version;
   const chosen = el('receipt').value, info = el('receipt-info'), link = el('download'), body = el('rows');
   ++hourRequest;
@@ -110,7 +110,8 @@ async function receipt() {
     const previous = el('valid-hour').value;
     el('valid-hour').replaceChildren(...doc.points.map(([valid]) => option(fmt.format(new Date(valid)), valid)));
     const firstMatched = doc.points.find(([valid]) => statusFor(valid, series.observed[valid], catalog.checked) === 'Matched');
-    if (doc.points.some(([valid]) => valid === previous)) el('valid-hour').value = previous;
+    if (exampleHour && doc.points.some(([valid]) => valid === exampleHour)) el('valid-hour').value = exampleHour;
+    else if (doc.points.some(([valid]) => valid === previous)) el('valid-hour').value = previous;
     else if (firstMatched) el('valid-hour').value = firstMatched[0];
     el('hour-panel').hidden = false;
     showHour();
@@ -124,6 +125,9 @@ async function changeSeries() {
   const mine = ++selection; ++version; ++hourRequest;
   el('hour-panel').hidden = true;
   const station = el('station').value, provider = el('provider').value;
+  text('example', 'Reading the selected airport’s forecasts…');
+  el('example-link').hidden = true;
+  el('example-link').onclick = null;
   try {
     const [cells, observed] = await Promise.all([json(`scores/${station}-${provider}.json`), json(`observed/${station}.json`)]);
     if (mine !== selection) return;
@@ -146,9 +150,33 @@ async function changeSeries() {
     text('station-note', `ECCC climate ID ${st.climate_id} · ${st.zone}. ` +
       (last ? `Latest saved station reading: ${temp(last[1][0])} at ${utc(last[0])}. ` : 'No station readings available. ') +
       (state.observed === 'Retrieved' ? '' : state.observed));
-    metrics(); await receipt();
+    const example = cells.map(cell => cell.largest_revision)
+      .filter(item => item && statusFor(item.valid, observed[item.valid], catalog.checked) === 'Matched')
+      .sort((a, b) => b.valid.localeCompare(a.valid) || b.after.capture.localeCompare(a.after.capture))[0];
+    if (example) {
+      const local = new Intl.DateTimeFormat('en-CA', {timeZone: st.zone, dateStyle: 'medium', timeStyle: 'short'});
+      text('example', `For ${local.format(new Date(example.valid))} at ${st.name}, ${catalog.providers[provider]} forecast ${temp(example.after.forecast)}. The airport measured ${temp(observed[example.valid][0])}.`);
+      el('receipt').value = example.after.path;
+      el('example-link').hidden = false;
+      el('example-link').onclick = async event => {
+        event.preventDefault();
+        el('receipt').value = example.after.path;
+        await receipt(example.valid);
+        if (mine === selection && !el('hour-panel').hidden) el('valid-hour').focus();
+      };
+    } else {
+      const score = summarize(cells);
+      text('example', score.matched
+        ? `At ${st.name}, the forecasts differed from the thermometer by ${temp(score.mae)} on average across ${score.matched} matched forecast points.`
+        : receipts.length ? `Forecasts for ${st.name} are saved. A comparison appears when a matching airport reading arrives.`
+        : `There are no saved forecasts from ${catalog.providers[provider]} at ${st.name}. Choose another forecast source.`);
+    }
+    metrics(); await receipt(example?.valid);
   } catch {
-    if (mine === selection) text('status','A data file could not be loaded. Reload to retry.');
+    if (mine === selection) {
+      text('example', 'The selected airport’s data could not be loaded.');
+      text('status', 'A data file could not be loaded. Reload to retry.');
+    }
   }
 }
 
@@ -157,11 +185,17 @@ async function start() {
     catalog = await json('index.json');
     el('station').replaceChildren(...Object.entries(catalog.stations).map(([k,s]) => option(s.name,k)));
     el('provider').replaceChildren(...Object.entries(catalog.providers).map(([k,name]) => option(name,k)));
-    if (catalog.receipts.some(r => r.provider === 'openweather')) el('provider').value = 'openweather';
+    const firstStation = el('station').value;
+    const available = catalog.receipts.filter(r => r.station === firstStation);
+    const initial = available.find(r => r.provider === 'openweather') ?? available[0] ?? catalog.receipts[0];
+    if (initial) {
+      el('station').value = initial.station;
+      el('provider').value = initial.provider;
+    }
     text('status', `Archive checked ${utc(catalog.checked)} · Captures scheduled every six hours.`);
     for (const id of ['station','provider']) el(id).addEventListener('change', changeSeries);
     for (const id of ['month','day','period']) el(id).addEventListener('change', () => { if (series) metrics(); });
-    el('receipt').addEventListener('change', receipt);
+    el('receipt').addEventListener('change', () => receipt());
     el('valid-hour').addEventListener('change', showHour);
     await changeSeries();
   } catch { text('status','The archive could not be loaded. Reload to retry.'); }

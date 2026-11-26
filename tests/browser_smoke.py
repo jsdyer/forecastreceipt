@@ -30,6 +30,10 @@ def main():
                 page.on("pageerror", lambda error: errors.append(str(error)))
                 page.goto(f"http://127.0.0.1:{server.server_port}/example-tool/")
                 page.select_option("#provider", "noaa-gfs")
+                page.wait_for_function("document.querySelector('#example').textContent.includes('airport measured')")
+                page.locator("#example-link").click()
+                page.wait_for_function("document.querySelector('#history-result').textContent.includes('airport measured')")
+                page.wait_for_function("document.activeElement.id === 'valid-hour'")
                 page.wait_for_selector("#rows tr")
                 assert 38 <= page.locator("#rows tr").count() <= 40
                 page.wait_for_selector("#hour-rows tr")

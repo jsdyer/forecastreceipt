@@ -4,9 +4,9 @@
   "day": 1,
   "period": "Afternoon",
   "eligible": 44,
-  "matched": 36,
-  "sum_error": -42.0,
-  "sum_absolute": 53.2,
+  "matched": 44,
+  "sum_error": -54.5,
+  "sum_absolute": 65.7,
   "largest_revision": {
    "valid": "2026-11-22T21:00:00Z",
    "change": 3.5,
@@ -26,10 +26,10 @@
   "month": "2026-11",
   "day": 1,
   "period": "Evening",
-  "eligible": 38,
-  "matched": 38,
-  "sum_error": -42.7,
-  "sum_absolute": 79.1,
+  "eligible": 46,
+  "matched": 46,
+  "sum_error": -63.8,
+  "sum_absolute": 100.2,
   "largest_revision": {
    "valid": "2026-11-21T06:00:00Z",
    "change": -2.6,
@@ -50,9 +50,9 @@
   "day": 1,
   "period": "Morning",
   "eligible": 42,
-  "matched": 34,
-  "sum_error": -20.4,
-  "sum_absolute": 71.4,
+  "matched": 42,
+  "sum_error": -44.1,
+  "sum_absolute": 95.1,
   "largest_revision": {
    "valid": "2026-11-26T15:00:00Z",
    "change": -2.8,
@@ -73,9 +73,9 @@
   "day": 1,
   "period": "Overnight",
   "eligible": 40,
-  "matched": 32,
-  "sum_error": -16.4,
-  "sum_absolute": 83.2,
+  "matched": 40,
+  "sum_error": -34.3,
+  "sum_absolute": 101.1,
   "largest_revision": {
    "valid": "2026-11-26T12:00:00Z",
    "change": 3.4,
@@ -96,9 +96,9 @@
   "day": 2,
   "period": "Afternoon",
   "eligible": 36,
-  "matched": 28,
-  "sum_error": -41.4,
-  "sum_absolute": 47.4,
+  "matched": 36,
+  "sum_error": -52.3,
+  "sum_absolute": 58.3,
   "largest_revision": {
    "valid": "2026-11-26T21:00:00Z",
    "change": 2.8,
@@ -118,10 +118,10 @@
   "month": "2026-11",
   "day": 2,
   "period": "Evening",
-  "eligible": 30,
-  "matched": 30,
-  "sum_error": -48.4,
-  "sum_absolute": 78.6,
+  "eligible": 38,
+  "matched": 38,
+  "sum_error": -65.2,
+  "sum_absolute": 95.4,
   "largest_revision": {
    "valid": "2026-11-21T03:00:00Z",
    "change": -2.6,
@@ -142,9 +142,9 @@
   "day": 2,
   "period": "Morning",
   "eligible": 34,
-  "matched": 26,
-  "sum_error": -13.1,
-  "sum_absolute": 55.9,
+  "matched": 34,
+  "sum_error": -32.7,
+  "sum_absolute": 75.5,
   "largest_revision": {
    "valid": "2026-11-26T18:00:00Z",
    "change": 2.5,
@@ -165,9 +165,9 @@
   "day": 2,
   "period": "Overnight",
   "eligible": 32,
-  "matched": 24,
-  "sum_error": -9.3,
-  "sum_absolute": 63.7,
+  "matched": 32,
+  "sum_error": -32.6,
+  "sum_absolute": 87.0,
   "largest_revision": {
    "valid": "2026-11-23T12:00:00Z",
    "change": 2.1,
@@ -188,9 +188,9 @@
   "day": 3,
   "period": "Afternoon",
   "eligible": 28,
-  "matched": 21,
-  "sum_error": -35.4,
-  "sum_absolute": 35.8,
+  "matched": 28,
+  "sum_error": -51.8,
+  "sum_absolute": 52.2,
   "largest_revision": {
    "valid": "2026-11-23T21:00:00Z",
    "change": -4.2,
@@ -210,10 +210,10 @@
   "month": "2026-11",
   "day": 3,
   "period": "Evening",
-  "eligible": 22,
-  "matched": 22,
-  "sum_error": -47.6,
-  "sum_absolute": 56.4,
+  "eligible": 30,
+  "matched": 30,
+  "sum_error": -62.0,
+  "sum_absolute": 71.8,
   "largest_revision": {
    "valid": "2026-11-27T03:00:00Z",
    "change": -2.1,
@@ -234,9 +234,9 @@
   "day": 3,
   "period": "Morning",
   "eligible": 26,
-  "matched": 20,
-  "sum_error": -31.4,
-  "sum_absolute": 49.8,
+  "matched": 26,
+  "sum_error": -49.7,
+  "sum_absolute": 68.1,
   "largest_revision": {
    "valid": "2026-11-23T15:00:00Z",
    "change": -3.0,
@@ -257,9 +257,9 @@
   "day": 3,
   "period": "Overnight",
   "eligible": 24,
-  "matched": 20,
-  "sum_error": -40.2,
-  "sum_absolute": 58.2,
+  "matched": 24,
+  "sum_error": -50.5,
+  "sum_absolute": 68.5,
   "largest_revision": {
    "valid": "2026-11-28T12:00:00Z",
    "change": 2.7,
@@ -280,9 +280,9 @@
   "day": 4,
   "period": "Afternoon",
   "eligible": 21,
-  "matched": 18,
-  "sum_error": -38.7,
-  "sum_absolute": 38.7,
+  "matched": 21,
+  "sum_error": -48.1,
+  "sum_absolute": 48.1,
   "largest_revision": {
    "valid": "2026-11-28T21:00:00Z",
    "change": -3.1,
@@ -302,10 +302,10 @@
   "month": "2026-11",
   "day": 4,
   "period": "Evening",
-  "eligible": 18,
-  "matched": 18,
-  "sum_error": -49.4,
-  "sum_absolute": 49.4,
+  "eligible": 22,
+  "matched": 22,
+  "sum_error": -56.4,
+  "sum_absolute": 56.4,
   "largest_revision": {
    "valid": "2026-11-29T06:00:00Z",
    "change": -3.2,
@@ -326,9 +326,9 @@
   "day": 4,
   "period": "Morning",
   "eligible": 20,
-  "matched": 16,
-  "sum_error": -38.0,
-  "sum_absolute": 38.4,
+  "matched": 20,
+  "sum_error": -56.1,
+  "sum_absolute": 56.5,
   "largest_revision": {
    "valid": "2026-11-24T15:00:00Z",
    "change": 3.5,
@@ -349,9 +349,9 @@
   "day": 4,
   "period": "Overnight",
   "eligible": 20,
-  "matched": 16,
-  "sum_error": -44.1,
-  "sum_absolute": 44.1,
+  "matched": 20,
+  "sum_error": -55.9,
+  "sum_absolute": 55.9,
   "largest_revision": {
    "valid": "2026-11-29T12:00:00Z",
    "change": -4.4,
@@ -372,9 +372,9 @@
   "day": 5,
   "period": "Afternoon",
   "eligible": 18,
-  "matched": 14,
-  "sum_error": -31.0,
-  "sum_absolute": 34.4,
+  "matched": 18,
+  "sum_error": -48.6,
+  "sum_absolute": 52.0,
   "largest_revision": {
    "valid": "2026-11-25T21:00:00Z",
    "change": 5.4,
@@ -394,10 +394,10 @@
   "month": "2026-11",
   "day": 5,
   "period": "Evening",
-  "eligible": 14,
-  "matched": 14,
-  "sum_error": -50.7,
-  "sum_absolute": 50.7,
+  "eligible": 18,
+  "matched": 18,
+  "sum_error": -57.0,
+  "sum_absolute": 57.0,
   "largest_revision": {
    "valid": "2026-11-29T06:00:00Z",
    "change": 3.8,
@@ -418,9 +418,9 @@
   "day": 5,
   "period": "Morning",
   "eligible": 16,
-  "matched": 12,
-  "sum_error": -42.3,
-  "sum_absolute": 42.3,
+  "matched": 16,
+  "sum_error": -58.0,
+  "sum_absolute": 58.0,
   "largest_revision": {
    "valid": "2026-11-29T15:00:00Z",
    "change": -4.6,
@@ -441,9 +441,9 @@
   "day": 5,
   "period": "Overnight",
   "eligible": 16,
-  "matched": 12,
-  "sum_error": -54.3,
-  "sum_absolute": 54.3,
+  "matched": 16,
+  "sum_error": -65.4,
+  "sum_absolute": 65.4,
   "largest_revision": {
    "valid": "2026-11-29T09:00:00Z",
    "change": 2.5,
@@ -467,6 +467,29 @@
   "matched": 0,
   "sum_error": 0,
   "sum_absolute": 0,
+  "largest_revision": {
+   "valid": "2026-12-01T21:00:00Z",
+   "change": 0.2,
+   "before": {
+    "capture": "2026-11-27T02:21:53Z",
+    "forecast": 9.9,
+    "path": "receipts/2026-11/20261127T00-langley-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T08:20:57Z",
+    "forecast": 10.1,
+    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
+   }
+  }
+ },
+ {
+  "month": "2026-12",
+  "day": 5,
+  "period": "Evening",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
   "largest_revision": null
  },
  {
@@ -479,16 +502,16 @@
   "sum_absolute": 0,
   "largest_revision": {
    "valid": "2026-12-01T15:00:00Z",
-   "change": -1.2,
+   "change": 1.8,
    "before": {
-    "capture": "2026-11-26T20:25:17Z",
-    "forecast": 7.0,
-    "path": "receipts/2026-11/20261126T18-langley-noaa-gfs.json"
-   },
-   "after": {
     "capture": "2026-11-27T02:21:53Z",
     "forecast": 5.8,
     "path": "receipts/2026-11/20261127T00-langley-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T08:20:57Z",
+    "forecast": 7.6,
+    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
    }
   }
  },
@@ -502,16 +525,16 @@
   "sum_absolute": 0,
   "largest_revision": {
    "valid": "2026-12-01T12:00:00Z",
-   "change": -1.7,
+   "change": 2.0,
    "before": {
-    "capture": "2026-11-26T14:21:58Z",
-    "forecast": 8.0,
-    "path": "receipts/2026-11/20261126T12-langley-noaa-gfs.json"
+    "capture": "2026-11-27T02:21:53Z",
+    "forecast": 5.6,
+    "path": "receipts/2026-11/20261127T00-langley-noaa-gfs.json"
    },
    "after": {
-    "capture": "2026-11-26T20:25:17Z",
-    "forecast": 6.3,
-    "path": "receipts/2026-11/20261126T18-langley-noaa-gfs.json"
+    "capture": "2026-11-27T08:20:57Z",
+    "forecast": 7.6,
+    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
    }
   }
  }

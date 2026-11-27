@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-27T08:22:37Z",
+ "checked": "2026-11-27T14:21:50Z",
  "stations": {
   "langley": {
    "name": "Langley Regional",
@@ -368,9 +368,23 @@
    "capture": "2026-11-27T08:20:57Z",
    "count": 40,
    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
+  },
+  {
+   "station": "halifax",
+   "provider": "noaa-gfs",
+   "capture": "2026-11-27T14:21:47Z",
+   "count": 40,
+   "path": "receipts/2026-11/20261127T12-halifax-noaa-gfs.json"
+  },
+  {
+   "station": "langley",
+   "provider": "noaa-gfs",
+   "capture": "2026-11-27T14:21:44Z",
+   "count": 40,
+   "path": "receipts/2026-11/20261127T12-langley-noaa-gfs.json"
   }
  ],
  "first_capture": "2026-11-19T04:43:08Z",
- "last_capture": "2026-11-27T08:20:59Z",
- "forecast_points": 1920
+ "last_capture": "2026-11-27T14:21:47Z",
+ "forecast_points": 2000
 }

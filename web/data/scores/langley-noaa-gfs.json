@@ -72,7 +72,7 @@
   "month": "2026-11",
   "day": 1,
   "period": "Overnight",
-  "eligible": 40,
+  "eligible": 48,
   "matched": 40,
   "sum_error": -34.3,
   "sum_absolute": 101.1,
@@ -164,7 +164,7 @@
   "month": "2026-11",
   "day": 2,
   "period": "Overnight",
-  "eligible": 32,
+  "eligible": 40,
   "matched": 32,
   "sum_error": -32.6,
   "sum_absolute": 87.0,
@@ -256,7 +256,7 @@
   "month": "2026-11",
   "day": 3,
   "period": "Overnight",
-  "eligible": 24,
+  "eligible": 32,
   "matched": 24,
   "sum_error": -50.5,
   "sum_absolute": 68.5,
@@ -348,7 +348,7 @@
   "month": "2026-11",
   "day": 4,
   "period": "Overnight",
-  "eligible": 20,
+  "eligible": 24,
   "matched": 20,
   "sum_error": -55.9,
   "sum_absolute": 55.9,
@@ -440,7 +440,7 @@
   "month": "2026-11",
   "day": 5,
   "period": "Overnight",
-  "eligible": 16,
+  "eligible": 20,
   "matched": 16,
   "sum_error": -65.4,
   "sum_absolute": 65.4,
@@ -461,6 +461,29 @@
  },
  {
   "month": "2026-12",
+  "day": 4,
+  "period": "Overnight",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": {
+   "valid": "2026-12-01T09:00:00Z",
+   "change": -0.7,
+   "before": {
+    "capture": "2026-11-27T08:20:57Z",
+    "forecast": 8.1,
+    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T14:21:44Z",
+    "forecast": 7.4,
+    "path": "receipts/2026-11/20261127T12-langley-noaa-gfs.json"
+   }
+  }
+ },
+ {
+  "month": "2026-12",
   "day": 5,
   "period": "Afternoon",
   "eligible": 0,
@@ -469,16 +492,16 @@
   "sum_absolute": 0,
   "largest_revision": {
    "valid": "2026-12-01T21:00:00Z",
-   "change": 0.2,
+   "change": -2.6,
    "before": {
-    "capture": "2026-11-27T02:21:53Z",
-    "forecast": 9.9,
-    "path": "receipts/2026-11/20261127T00-langley-noaa-gfs.json"
-   },
-   "after": {
     "capture": "2026-11-27T08:20:57Z",
     "forecast": 10.1,
     "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T14:21:44Z",
+    "forecast": 7.5,
+    "path": "receipts/2026-11/20261127T12-langley-noaa-gfs.json"
    }
   }
  },
@@ -490,7 +513,20 @@
   "matched": 0,
   "sum_error": 0,
   "sum_absolute": 0,
-  "largest_revision": null
+  "largest_revision": {
+   "valid": "2026-12-02T03:00:00Z",
+   "change": 1.4,
+   "before": {
+    "capture": "2026-11-27T08:20:57Z",
+    "forecast": 5.9,
+    "path": "receipts/2026-11/20261127T06-langley-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T14:21:44Z",
+    "forecast": 7.3,
+    "path": "receipts/2026-11/20261127T12-langley-noaa-gfs.json"
+   }
+  }
  },
  {
   "month": "2026-12",

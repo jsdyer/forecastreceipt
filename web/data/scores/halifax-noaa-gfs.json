@@ -49,7 +49,7 @@
   "month": "2026-11",
   "day": 1,
   "period": "Morning",
-  "eligible": 41,
+  "eligible": 45,
   "matched": 41,
   "sum_error": 15.6,
   "sum_absolute": 46.2,
@@ -72,7 +72,7 @@
   "month": "2026-11",
   "day": 1,
   "period": "Overnight",
-  "eligible": 43,
+  "eligible": 47,
   "matched": 39,
   "sum_error": 8.4,
   "sum_absolute": 33.4,
@@ -141,7 +141,7 @@
   "month": "2026-11",
   "day": 2,
   "period": "Morning",
-  "eligible": 33,
+  "eligible": 37,
   "matched": 33,
   "sum_error": 6.4,
   "sum_absolute": 43.0,
@@ -164,7 +164,7 @@
   "month": "2026-11",
   "day": 2,
   "period": "Overnight",
-  "eligible": 35,
+  "eligible": 39,
   "matched": 31,
   "sum_error": 2.9,
   "sum_absolute": 27.7,
@@ -215,17 +215,17 @@
   "sum_error": 5.8,
   "sum_absolute": 24.0,
   "largest_revision": {
-   "valid": "2026-11-28T00:00:00Z",
-   "change": -2.2,
+   "valid": "2026-11-30T00:00:00Z",
+   "change": -2.5,
    "before": {
-    "capture": "2026-11-25T14:23:02Z",
-    "forecast": 10.9,
-    "path": "receipts/2026-11/20261125T12-halifax-noaa-gfs.json"
+    "capture": "2026-11-27T08:20:59Z",
+    "forecast": 3.2,
+    "path": "receipts/2026-11/20261127T06-halifax-noaa-gfs.json"
    },
    "after": {
-    "capture": "2026-11-25T20:23:33Z",
-    "forecast": 8.7,
-    "path": "receipts/2026-11/20261125T18-halifax-noaa-gfs.json"
+    "capture": "2026-11-27T14:21:47Z",
+    "forecast": 0.7,
+    "path": "receipts/2026-11/20261127T12-halifax-noaa-gfs.json"
    }
   }
  },
@@ -233,22 +233,22 @@
   "month": "2026-11",
   "day": 3,
   "period": "Morning",
-  "eligible": 25,
+  "eligible": 29,
   "matched": 25,
   "sum_error": -8.3,
   "sum_absolute": 36.7,
   "largest_revision": {
-   "valid": "2026-11-23T12:00:00Z",
-   "change": 1.7,
+   "valid": "2026-11-30T12:00:00Z",
+   "change": -2.5,
    "before": {
-    "capture": "2026-11-20T00:35:59Z",
-    "forecast": 11.8,
-    "path": "receipts/2026-11/20261120T00-halifax-noaa-gfs.json"
+    "capture": "2026-11-27T08:20:59Z",
+    "forecast": 4.4,
+    "path": "receipts/2026-11/20261127T06-halifax-noaa-gfs.json"
    },
    "after": {
-    "capture": "2026-11-20T15:23:57Z",
-    "forecast": 13.5,
-    "path": "receipts/2026-11/20261120T12-halifax-noaa-gfs.json"
+    "capture": "2026-11-27T14:21:47Z",
+    "forecast": 1.9,
+    "path": "receipts/2026-11/20261127T12-halifax-noaa-gfs.json"
    }
   }
  },
@@ -256,7 +256,7 @@
   "month": "2026-11",
   "day": 3,
   "period": "Overnight",
-  "eligible": 27,
+  "eligible": 31,
   "matched": 23,
   "sum_error": -4.5,
   "sum_absolute": 26.7,
@@ -325,7 +325,7 @@
   "month": "2026-11",
   "day": 4,
   "period": "Morning",
-  "eligible": 20,
+  "eligible": 22,
   "matched": 20,
   "sum_error": -15.5,
   "sum_absolute": 34.1,
@@ -348,7 +348,7 @@
   "month": "2026-11",
   "day": 4,
   "period": "Overnight",
-  "eligible": 21,
+  "eligible": 23,
   "matched": 19,
   "sum_error": -8.5,
   "sum_absolute": 27.3,
@@ -417,7 +417,7 @@
   "month": "2026-11",
   "day": 5,
   "period": "Morning",
-  "eligible": 16,
+  "eligible": 18,
   "matched": 16,
   "sum_error": -0.8,
   "sum_absolute": 23.2,
@@ -440,7 +440,7 @@
   "month": "2026-11",
   "day": 5,
   "period": "Overnight",
-  "eligible": 17,
+  "eligible": 19,
   "matched": 15,
   "sum_error": -1.2,
   "sum_absolute": 15.8,
@@ -456,6 +456,29 @@
     "capture": "2026-11-25T02:22:51Z",
     "forecast": 2.2,
     "path": "receipts/2026-11/20261125T00-halifax-noaa-gfs.json"
+   }
+  }
+ },
+ {
+  "month": "2026-12",
+  "day": 4,
+  "period": "Morning",
+  "eligible": 0,
+  "matched": 0,
+  "sum_error": 0,
+  "sum_absolute": 0,
+  "largest_revision": {
+   "valid": "2026-12-01T12:00:00Z",
+   "change": 1.0,
+   "before": {
+    "capture": "2026-11-27T08:20:59Z",
+    "forecast": 0.2,
+    "path": "receipts/2026-11/20261127T06-halifax-noaa-gfs.json"
+   },
+   "after": {
+    "capture": "2026-11-27T14:21:47Z",
+    "forecast": 1.2,
+    "path": "receipts/2026-11/20261127T12-halifax-noaa-gfs.json"
    }
   }
  },
